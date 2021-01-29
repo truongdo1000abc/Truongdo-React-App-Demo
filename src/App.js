@@ -58,10 +58,20 @@ function App() {
     setOpenEditForm(false);
     setOpenSnack(true);
   };
-  const setDeleteItem = (item) => {
-    const index = value.indexOf(item);
-    if (index > -1) {
-      value.splice(index, 1);
+  const setActionItem = (item, action) => {
+    console.log(item, action);
+    if (action == "Delete")
+    {
+      const index = value.indexOf(item);
+      if (index > -1) {
+        value.splice(index, 1);
+      }
+    }
+
+    if (action == "Done")
+    {
+      const index = value.indexOf(item);
+      value[index].status = 2;
     }
 
     setOpenSnack(true);
@@ -81,7 +91,11 @@ function App() {
        Thêm mới
      </button>
       {value.map((item) => (
+
          <div className="item-contain padding-5 row">
+            <div class="col-5">
+              {item.status == 2 ? <i class="fas fa-check"></i> : ""}
+             </div>
            <div class="col-25">
              {item.name}
            </div>
@@ -92,7 +106,7 @@ function App() {
              Deadline: {item.dateEnd}
            </div>
            <div class="col-5 f-right">
-             <ExpandOption item={item} setOpenSnack={setOpenSnack} setDeleteItem={setDeleteItem}/>
+             <ExpandOption item={item} setOpenSnack={setOpenSnack} setActionItem={setActionItem}/>
            </div>
          </div>
        )

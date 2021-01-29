@@ -4,7 +4,7 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Dialog from '@material-ui/core/Dialog';
 import FormContent from './FormContent';
 
-function ExpandOption({item, setOpenSnack, setDeleteItem}) {
+function ExpandOption({item, setOpenSnack, setActionItem}) {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
@@ -18,10 +18,10 @@ function ExpandOption({item, setOpenSnack, setDeleteItem}) {
   const [confirmState, setConfirmState] = React.useState(null);
   const prevOpen = React.useRef(open);
 
-  const confirmAction = (item) => {
+  const confirmAction = (item, action) => {
     setOpenForm(false);
     setOpenSnack(true);
-    setDeleteItem(item);
+    setActionItem(item, action);
   };
 
   const handleClose = () => {
@@ -32,7 +32,7 @@ function ExpandOption({item, setOpenSnack, setDeleteItem}) {
     console.log(action, item);
     if ( action != 'Edit')
     {
-      setConfirmState({"action": name});
+      setConfirmState({"action": action, "actionName": name});
       setOpenForm(true);
     }
     else {
@@ -52,7 +52,7 @@ function ExpandOption({item, setOpenSnack, setDeleteItem}) {
     setOpen(false);
   };
   const setSaveEditForm = (item) => {
-    
+
     setOpenEditForm(false);
     setOpenSnack(true);
   };
@@ -66,7 +66,7 @@ function ExpandOption({item, setOpenSnack, setDeleteItem}) {
           <div class="more-option cur-point">
             <p class="op-select padding-10" onClick={() => handleClickOption('Edit', "Sửa", item)}>Sửa</p>
             <p class="op-select padding-10" onClick={() => handleClickOption('Delete', "Xóa", item)}>Xóa</p>
-            <p class="op-select padding-10" onClick={() => handleClickOption('Hide', "Ẩn", item)}>Ẩn</p>
+            <p class="op-select padding-10" onClick={() => handleClickOption('Done', "Hoàn thành", item)}>Hoàn thành</p>
           </div>
         </ClickAwayListener>
         :
@@ -76,8 +76,8 @@ function ExpandOption({item, setOpenSnack, setDeleteItem}) {
       <Dialog fullWidth={false} maxWidth="sm" onClose={() => setOpenForm(false)} aria-labelledby="simple-dialog-title" open={openForm}>
         <div className="padding-10">
           <h4>Thông báo</h4>
-          <div>Bạn có chắc chắn {confirmState ? confirmState.action : ""} {item.name} ?</div>
-          <button class="large-button marginTop-10" autoFocus onClick={() => confirmAction(item)}>
+          <div>Bạn có chắc chắn {confirmState ? confirmState.actionName : ""} {item.name} ?</div>
+          <button class="large-button marginTop-10" autoFocus onClick={() => confirmAction(item, confirmState.action)}>
             OK
           </button>
           <button class="large-button" autoFocus onClick={() => setOpenForm(false)}>
