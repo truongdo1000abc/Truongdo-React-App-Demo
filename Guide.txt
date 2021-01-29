@@ -1,0 +1,5 @@
+Bài test "ToDo List":
+
+- Sử dụng Reactjs chạy bằng npm command.
+- Trong project có sử dụng thêm thư viện của MATERIAL-UI
+	+ Để add thêm thư viện này: chạy cú pháp: $ npm install @material-ui/core
